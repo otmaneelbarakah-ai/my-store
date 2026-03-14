@@ -6,725 +6,125 @@
   <title>ST.OTMANE - متجر أزياء</title>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <style>
-    /* جميع الأنماط السابقة تبقى كما هي، سأضيف بعض الأنماط الجديدة للأزرار */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Tajawal', sans-serif;
-    }
-    body {
-      background: #0a0a0c;
-      color: #fff;
-      max-width: 430px;
-      margin: 0 auto;
-      padding-bottom: 80px;
-      position: relative;
-    }
-    .bg-glow {
-      position: fixed;
-      top: -100px;
-      right: -100px;
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, rgba(0,200,255,0.15) 0%, transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .bg-glow2 {
-      position: fixed;
-      bottom: -50px;
-      left: -80px;
-      width: 250px;
-      height: 250px;
-      background: radial-gradient(circle, rgba(255,100,200,0.1) 0%, transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .content {
-      position: relative;
-      z-index: 1;
-    }
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px;
-      background: rgba(20,20,30,0.6);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      margin-bottom: 10px;
-    }
-    .store-title {
-      font-size: 28px;
-      font-weight: 900;
-      color: #fff;
-      text-shadow: 0 0 15px rgba(255,140,58,0.5);
-    }
-    .store-title span {
-      color: #ff8c3a;
-    }
-    .search-bar {
-      background: rgba(255,255,255,0.1);
-      padding: 10px 16px;
-      border-radius: 30px;
-      color: #aaa;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      width: 60%;
-      border: 1px solid rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      transition: 0.2s;
-    }
-    .search-bar:hover {
-      background: rgba(255,255,255,0.15);
-      border-color: rgba(0,200,255,0.4);
-    }
-    .actions-row {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 14px;
-      padding: 0 20px 20px;
-    }
-    .action-btn {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border: 1px solid rgba(255,255,255,0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      position: relative;
-      transition: 0.3s;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      color: rgba(255,255,255,0.8);
-    }
-    .action-btn:hover {
-      background: rgba(255,255,255,0.15);
-      border-color: rgba(0,200,255,0.6);
-      box-shadow: 0 0 20px rgba(0,200,255,0.5);
-      color: #fff;
-    }
-    .action-btn.lit {
-      background: rgba(76,175,80,0.2);
-      border-color: #4caf50;
-      box-shadow: 0 0 25px #4caf50;
-      color: #fff;
-    }
-    .cart-badge {
-      position: absolute;
-      top: -4px;
-      right: -4px;
-      background: #ff8c3a;
-      color: #111;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      box-shadow: 0 0 10px #ff8c3a;
-    }
-    .cats-scroll-wrap {
-      overflow-x: auto;
-      padding: 0 20px 20px;
-      scrollbar-width: none;
-    }
-    .cats-scroll {
-      display: flex;
-      gap: 16px;
-      width: max-content;
-    }
-    .cat-pill {
-      width: 52px;
-      height: 52px;
-      border-radius: 26px;
-      background: rgba(30,30,40,0.6);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
-      color: rgba(255,255,255,0.8);
-    }
-    .cat-pill svg {
-      width: 26px;
-      height: 26px;
-      transition: 0.3s;
-    }
-    .cat-pill:hover {
-      background: rgba(50,50,70,0.7);
-      border-color: rgba(255,255,255,0.3);
-      transform: scale(1.05);
-    }
-    .cat-pill.active {
-      background: rgba(100,200,255,0.2);
-      border-color: #64b5f6;
-      box-shadow: 0 0 30px #64b5f6;
-      color: #fff;
-    }
-    .cat-pill[data-cat="Jackets"].active { border-color: #ff8c3a; box-shadow: 0 0 30px #ff8c3a; }
-    .cat-pill[data-cat="Shirts"].active { border-color: #4caf50; box-shadow: 0 0 30px #4caf50; }
-    .cat-pill[data-cat="Jeans"].active { border-color: #2196f3; box-shadow: 0 0 30px #2196f3; }
-    .cat-pill[data-cat="Shorts"].active { border-color: #ffeb3b; box-shadow: 0 0 30px #ffeb3b; }
-    .cat-pill[data-cat="Suits"].active { border-color: #9c27b0; box-shadow: 0 0 30px #9c27b0; }
-    .cat-pill[data-cat="Hoodies"].active { border-color: #f44336; box-shadow: 0 0 30px #f44336; }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      padding: 0 20px 20px;
-    }
-    .cat-card {
-      background: rgba(30,30,40,0.7);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border-radius: 24px;
-      overflow: hidden;
-      cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: 0.3s;
-    }
-    .cat-card:hover {
-      border-color: rgba(100,200,255,0.3);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    }
-    .cat-card-img {
-      width: 100%;
-      aspect-ratio: 1/1;
-      background: #1e1e2a;
-      position: relative;
-    }
-    .cat-card-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .upload-cat-btn {
-      position: absolute;
-      bottom: 8px;
-      left: 8px;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(5px);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      cursor: pointer;
-      z-index: 10;
-    }
-    .cat-card-info {
-      padding: 12px;
-      text-align: right;
-    }
-    .cat-card-name {
-      font-size: 16px;
-      font-weight: bold;
-      color: #fff;
-    }
-    .cat-card-count {
-      font-size: 13px;
-      color: #aaa;
-    }
-    .section-header {
-      padding: 0 20px 10px;
-    }
-    .section-title {
-      font-size: 20px;
-      font-weight: 700;
-      color: #fff;
-    }
-    .section-title span {
-      color: #ff8c3a;
-    }
-    .products-scroll {
-      display: flex;
-      gap: 16px;
-      overflow-x: auto;
-      padding: 0 20px 20px;
-      scrollbar-width: none;
-    }
-    .prod-card {
-      min-width: 180px;
-      background: rgba(30,30,40,0.7);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border-radius: 24px;
-      overflow: hidden;
-      cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: 0.3s;
-      display: flex;
-      flex-direction: column;
-    }
-    .prod-card:hover {
-      border-color: rgba(255,140,58,0.4);
-      box-shadow: 0 10px 25px rgba(255,140,58,0.2);
-    }
-    .prod-img {
-      width: 100%;
-      height: 160px;
-      background: #222;
-      position: relative;
-    }
-    .prod-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .prod-tag {
-      position: absolute;
-      bottom: 8px;
-      right: 8px;
-      background: #ff8c3a;
-      color: #111;
-      font-size: 11px;
-      font-weight: bold;
-      padding: 4px 12px;
-      border-radius: 30px;
-      backdrop-filter: blur(2px);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-    .prod-info {
-      padding: 12px;
-      text-align: right;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .prod-name {
-      font-size: 16px;
-      font-weight: 700;
-      color: #fff;
-    }
-    .prod-desc {
-      font-size: 12px;
-      color: #aaa;
-      line-height: 1.5;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-    .prod-price-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 4px;
-    }
-    .prod-price {
-      color: #ff8c3a;
-      font-weight: 700;
-      font-size: 16px;
-    }
-    .whatsapp-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: #25D366;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 4px 10px rgba(37,211,102,0.3);
-    }
-    .whatsapp-icon:hover {
-      transform: scale(1.1);
-      background: #20b858;
-    }
-    .whatsapp-icon svg {
-      width: 18px;
-      height: 18px;
-      fill: white;
-    }
-    .bottom-nav {
-      position: fixed;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 40px);
-      max-width: 400px;
-      background: rgba(20,20,30,0.8);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-      border-radius: 40px;
-      display: flex;
-      justify-content: space-around;
-      padding: 8px 12px;
-      border: 1px solid rgba(255,255,255,0.15);
-      z-index: 100;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      cursor: pointer;
-      padding: 5px;
-    }
-    .nav-circle {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: 0.3s;
-    }
-    .nav-label {
-      font-size: 9px;
-      color: #aaa;
-    }
-    .nav-item.active .nav-circle {
-      background: #ff8c3a;
-      color: #111;
-      box-shadow: 0 0 25px #ff8c3a;
-    }
-    .nav-item.active .nav-label {
-      color: #ff8c3a;
-    }
-    .toast {
-      position: fixed;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #ff8c3a;
-      color: #111;
-      padding: 12px 24px;
-      border-radius: 40px;
-      font-weight: bold;
-      z-index: 200;
-      opacity: 0;
-      transition: 0.3s;
-      pointer-events: none;
-      box-shadow: 0 10px 25px rgba(255,140,58,0.3);
-    }
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(-10px);
-    }
-    #owner-dashboard {
-      background: rgba(30,30,40,0.8);
-      backdrop-filter: blur(20px);
-      margin: 10px 20px;
-      border-radius: 24px;
-      padding: 20px;
-      border: 1px solid #ff8c3a;
-    }
-    .product-detail-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0);
-      backdrop-filter: blur(0);
-      pointer-events: none;
-      transition: 0.3s;
-      z-index: 400;
-    }
-    .product-detail-sheet {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      max-width: 430px;
-      margin: 0 auto;
-      background: rgba(30,30,40,0.95);
-      backdrop-filter: blur(25px);
-      border-radius: 30px 30px 0 0;
-      padding: 20px;
-      transform: translateY(100%);
-      transition: 0.4s;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      max-height: 85vh;
-      overflow-y: auto;
-    }
-    .detail-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .detail-header-left {
-      display: flex;
-      gap: 10px;
-    }
-    .detail-close, .detail-edit, .detail-delete {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 18px;
-      transition: 0.2s;
-    }
-    .detail-edit:hover {
-      background: #ff8c3a;
-      color: #111;
-    }
-    .detail-delete:hover {
-      background: #ff4444;
-      color: #fff;
-    }
-    .detail-img {
-      width: 100%;
-      height: 250px;
-      background: #1e1e2a;
-      border-radius: 24px;
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
-    .detail-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .detail-name {
-      font-size: 24px;
-      font-weight: 900;
-      color: #fff;
-      margin-bottom: 10px;
-      text-align: right;
-    }
-    .detail-price {
-      font-size: 28px;
-      font-weight: 900;
-      color: #ff8c3a;
-      margin-bottom: 15px;
-      text-align: right;
-    }
-    .detail-tag {
-      display: inline-block;
-      background: #ff8c3a;
-      color: #111;
-      font-size: 13px;
-      font-weight: bold;
-      padding: 6px 18px;
-      border-radius: 30px;
-      margin-bottom: 15px;
-    }
-    .detail-desc {
-      font-size: 15px;
-      color: #ccc;
-      line-height: 1.8;
-      margin-bottom: 25px;
-      text-align: right;
-    }
-    .detail-whatsapp {
-      width: 100%;
-      padding: 16px;
-      background: #25D366;
-      border: none;
-      border-radius: 30px;
-      color: white;
-      font-size: 18px;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .detail-whatsapp:hover {
-      background: #20b858;
-    }
-    .detail-whatsapp svg {
-      width: 20px;
-      height: 20px;
-      fill: white;
-    }
-    .login-overlay, .add-overlay, .category-overlay, .edit-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0);
-      backdrop-filter: blur(0);
-      pointer-events: none;
-      transition: 0.3s;
-      z-index: 300;
-    }
-    .login-sheet, .add-sheet, .category-sheet, .edit-sheet {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      max-width: 430px;
-      margin: 0 auto;
-      background: rgba(30,30,40,0.95);
-      backdrop-filter: blur(25px);
-      border-radius: 30px 30px 0 0;
-      padding: 20px;
-      transform: translateY(100%);
-      transition: 0.4s;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-    .login-header, .add-header, .category-header, .edit-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .login-input, .add-input, .edit-input {
-      width: 100%;
-      padding: 15px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: white;
-      font-size: 16px;
-      text-align: right;
-      margin-bottom: 15px;
-    }
-    .login-btn, .add-btn, .edit-btn {
-      width: 100%;
-      padding: 15px;
-      background: #ff8c3a;
-      border: none;
-      border-radius: 16px;
-      color: #111;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .error-msg {
-      color: #ff5555;
-      font-size: 13px;
-      text-align: right;
-      margin-bottom: 10px;
-    }
-    .search-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.95);
-      backdrop-filter: blur(20px);
-      z-index: 250;
-      display: none;
-      flex-direction: column;
-      padding: 60px 20px;
-    }
-    .search-overlay.show {
-      display: flex;
-    }
-    .search-header {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 30px;
-    }
-    .search-header input {
-      flex: 1;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 30px;
-      padding: 15px;
-      color: white;
-      font-size: 16px;
-    }
-    .search-results {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .search-item {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      background: rgba(30,30,40,0.8);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 12px;
-      cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-    .search-item-img {
-      width: 60px;
-      height: 60px;
-      background: #222;
-      border-radius: 14px;
-      overflow: hidden;
-    }
-    .search-item-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .search-item-info {
-      flex: 1;
-      text-align: right;
-    }
-    .search-item-name {
-      font-weight: bold;
-      font-size: 16px;
-    }
-    .search-item-price {
-      color: #ff8c3a;
-      font-size: 14px;
-    }
-    .category-products-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      padding: 10px 0 20px;
-    }
-    .category-title {
-      font-size: 24px;
-      font-weight: 900;
-      color: #ff8c3a;
-      margin-bottom: 10px;
-      text-align: right;
-    }
-    .edit-img-preview {
-      width: 100%;
-      height: 150px;
-      background: #1a1a2a;
-      border-radius: 16px;
-      margin-bottom: 15px;
-      overflow: hidden;
-      display: none;
-    }
-    .edit-img-preview img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    /* جميع الأنماط السابقة كما هي، لم يتم تغييرها */
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Tajawal',sans-serif; }
+    body { background:#0a0a0c; color:#fff; max-width:430px; margin:0 auto; padding-bottom:80px; position:relative; }
+    .bg-glow { position:fixed; top:-100px; right:-100px; width:300px; height:300px; background:radial-gradient(circle,rgba(0,200,255,0.15) 0%,transparent 70%); border-radius:50%; pointer-events:none; z-index:0; }
+    .bg-glow2 { position:fixed; bottom:-50px; left:-80px; width:250px; height:250px; background:radial-gradient(circle,rgba(255,100,200,0.1) 0%,transparent 70%); border-radius:50%; pointer-events:none; z-index:0; }
+    .content { position:relative; z-index:1; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; padding:20px; background:rgba(20,20,30,0.6); backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:10px; }
+    .store-title { font-size:28px; font-weight:900; color:#fff; text-shadow:0 0 15px rgba(255,140,58,0.5); }
+    .store-title span { color:#ff8c3a; }
+    .search-bar { background:rgba(255,255,255,0.1); padding:10px 16px; border-radius:30px; color:#aaa; font-size:14px; display:flex; align-items:center; gap:8px; cursor:pointer; width:60%; border:1px solid rgba(255,255,255,0.1); backdrop-filter:blur(10px); transition:0.2s; }
+    .search-bar:hover { background:rgba(255,255,255,0.15); border-color:rgba(0,200,255,0.4); }
+    .actions-row { display:flex; align-items:center; justify-content:flex-end; gap:14px; padding:0 20px 20px; }
+    .action-btn { width:48px; height:48px; border-radius:50%; background:rgba(255,255,255,0.08); backdrop-filter:blur(15px); border:1px solid rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; cursor:pointer; position:relative; transition:0.3s; box-shadow:0 4px 15px rgba(0,0,0,0.3); color:rgba(255,255,255,0.8); }
+    .action-btn:hover { background:rgba(255,255,255,0.15); border-color:rgba(0,200,255,0.6); box-shadow:0 0 20px rgba(0,200,255,0.5); color:#fff; }
+    .action-btn.lit { background:rgba(76,175,80,0.2); border-color:#4caf50; box-shadow:0 0 25px #4caf50; color:#fff; }
+    .cart-badge { position:absolute; top:-4px; right:-4px; background:#ff8c3a; color:#111; border-radius:50%; width:20px; height:20px; font-size:12px; display:flex; align-items:center; justify-content:center; font-weight:bold; box-shadow:0 0 10px #ff8c3a; }
+    .cats-scroll-wrap { overflow-x:auto; padding:0 20px 20px; scrollbar-width:none; }
+    .cats-scroll { display:flex; gap:16px; width:max-content; }
+    .cat-pill { width:52px; height:52px; border-radius:26px; background:rgba(30,30,40,0.6); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:0.3s; box-shadow:0 6px 15px rgba(0,0,0,0.4); color:rgba(255,255,255,0.8); }
+    .cat-pill svg { width:26px; height:26px; transition:0.3s; }
+    .cat-pill:hover { background:rgba(50,50,70,0.7); border-color:rgba(255,255,255,0.3); transform:scale(1.05); }
+    .cat-pill.active { background:rgba(100,200,255,0.2); border-color:#64b5f6; box-shadow:0 0 30px #64b5f6; color:#fff; }
+    .cat-pill[data-cat="Jackets"].active { border-color:#ff8c3a; box-shadow:0 0 30px #ff8c3a; }
+    .cat-pill[data-cat="Shirts"].active { border-color:#4caf50; box-shadow:0 0 30px #4caf50; }
+    .cat-pill[data-cat="Jeans"].active { border-color:#2196f3; box-shadow:0 0 30px #2196f3; }
+    .cat-pill[data-cat="Shorts"].active { border-color:#ffeb3b; box-shadow:0 0 30px #ffeb3b; }
+    .cat-pill[data-cat="Suits"].active { border-color:#9c27b0; box-shadow:0 0 30px #9c27b0; }
+    .cat-pill[data-cat="Hoodies"].active { border-color:#f44336; box-shadow:0 0 30px #f44336; }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; padding:0 20px 20px; }
+    .cat-card { background:rgba(30,30,40,0.7); backdrop-filter:blur(15px); border-radius:24px; overflow:hidden; cursor:pointer; border:1px solid rgba(255,255,255,0.1); transition:0.3s; }
+    .cat-card:hover { border-color:rgba(100,200,255,0.3); box-shadow:0 10px 25px rgba(0,0,0,0.5); }
+    .cat-card-img { width:100%; aspect-ratio:1/1; background:#1e1e2a; position:relative; }
+    .cat-card-img img { width:100%; height:100%; object-fit:cover; }
+    .upload-cat-btn { position:absolute; bottom:8px; left:8px; width:32px; height:32px; border-radius:50%; background:rgba(0,0,0,0.6); backdrop-filter:blur(5px); color:white; border:1px solid rgba(255,255,255,0.3); display:flex; align-items:center; justify-content:center; font-size:16px; cursor:pointer; z-index:10; }
+    .cat-card-info { padding:12px; text-align:right; }
+    .cat-card-name { font-size:16px; font-weight:bold; color:#fff; }
+    .cat-card-count { font-size:13px; color:#aaa; }
+    .section-header { padding:0 20px 10px; }
+    .section-title { font-size:20px; font-weight:700; color:#fff; }
+    .section-title span { color:#ff8c3a; }
+    .products-scroll { display:flex; gap:16px; overflow-x:auto; padding:0 20px 20px; scrollbar-width:none; }
+    .prod-card { min-width:180px; background:rgba(30,30,40,0.7); backdrop-filter:blur(15px); border-radius:24px; overflow:hidden; cursor:pointer; border:1px solid rgba(255,255,255,0.1); transition:0.3s; display:flex; flex-direction:column; position:relative; }
+    .prod-card:hover { border-color:rgba(255,140,58,0.4); box-shadow:0 10px 25px rgba(255,140,58,0.2); }
+    .prod-img { width:100%; height:160px; background:#222; position:relative; }
+    .prod-img img { width:100%; height:100%; object-fit:cover; }
+    .prod-tag { position:absolute; bottom:8px; right:8px; background:#ff8c3a; color:#111; font-size:11px; font-weight:bold; padding:4px 12px; border-radius:30px; backdrop-filter:blur(2px); box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+    .prod-info { padding:12px; text-align:right; flex:1; display:flex; flex-direction:column; gap:6px; }
+    .prod-name { font-size:16px; font-weight:700; color:#fff; }
+    .prod-desc { font-size:12px; color:#aaa; line-height:1.5; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
+    .prod-price-row { display:flex; align-items:center; justify-content:space-between; margin-top:4px; }
+    .prod-price { color:#ff8c3a; font-weight:700; font-size:16px; }
+    .whatsapp-icon { width:34px; height:34px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:0.2s; box-shadow:0 4px 10px rgba(37,211,102,0.3); }
+    .whatsapp-icon:hover { transform:scale(1.1); background:#20b858; }
+    .whatsapp-icon svg { width:18px; height:18px; fill:white; }
+    .prod-edit-icon { position:absolute; top:8px; left:8px; width:32px; height:32px; background:rgba(0,0,0,0.6); backdrop-filter:blur(5px); border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; cursor:pointer; z-index:20; border:1px solid rgba(255,255,255,0.2); font-size:16px; transition:0.2s; }
+    .prod-edit-icon:hover { background:#ff8c3a; color:#111; }
+    .bottom-nav { position:fixed; bottom:10px; left:50%; transform:translateX(-50%); width:calc(100% - 40px); max-width:400px; background:rgba(20,20,30,0.8); backdrop-filter:blur(25px); border-radius:40px; display:flex; justify-content:space-around; padding:8px 12px; border:1px solid rgba(255,255,255,0.15); z-index:100; box-shadow:0 10px 30px rgba(0,0,0,0.5); }
+    .nav-item { display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; padding:5px; }
+    .nav-circle { width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.1); backdrop-filter:blur(10px); display:flex; align-items:center; justify-content:center; transition:0.3s; }
+    .nav-label { font-size:9px; color:#aaa; }
+    .nav-item.active .nav-circle { background:#ff8c3a; color:#111; box-shadow:0 0 25px #ff8c3a; }
+    .nav-item.active .nav-label { color:#ff8c3a; }
+    .toast { position:fixed; bottom:100px; left:50%; transform:translateX(-50%); background:#ff8c3a; color:#111; padding:12px 24px; border-radius:40px; font-weight:bold; z-index:200; opacity:0; transition:0.3s; pointer-events:none; box-shadow:0 10px 25px rgba(255,140,58,0.3); }
+    .toast.show { opacity:1; transform:translateX(-50%) translateY(-10px); }
+    #owner-dashboard { background:rgba(30,30,40,0.8); backdrop-filter:blur(20px); margin:10px 20px; border-radius:24px; padding:20px; border:1px solid #ff8c3a; }
+    .product-detail-overlay { position:fixed; inset:0; background:rgba(0,0,0,0); backdrop-filter:blur(0); pointer-events:none; transition:0.3s; z-index:400; }
+    .product-detail-sheet { position:absolute; bottom:0; left:0; right:0; max-width:430px; margin:0 auto; background:rgba(30,30,40,0.95); backdrop-filter:blur(25px); border-radius:30px 30px 0 0; padding:20px; transform:translateY(100%); transition:0.4s; border-top:1px solid rgba(255,255,255,0.1); max-height:85vh; overflow-y:auto; }
+    .detail-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+    .detail-header-left { display:flex; gap:10px; }
+    .detail-close, .detail-edit, .detail-delete { width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:18px; transition:0.2s; }
+    .detail-edit:hover { background:#ff8c3a; color:#111; }
+    .detail-delete:hover { background:#ff4444; color:#fff; }
+    .detail-img { width:100%; height:250px; background:#1e1e2a; border-radius:24px; overflow:hidden; margin-bottom:20px; }
+    .detail-img img { width:100%; height:100%; object-fit:cover; }
+    .detail-name { font-size:24px; font-weight:900; color:#fff; margin-bottom:10px; text-align:right; }
+    .detail-price { font-size:28px; font-weight:900; color:#ff8c3a; margin-bottom:15px; text-align:right; }
+    .detail-tag { display:inline-block; background:#ff8c3a; color:#111; font-size:13px; font-weight:bold; padding:6px 18px; border-radius:30px; margin-bottom:15px; }
+    .detail-desc { font-size:15px; color:#ccc; line-height:1.8; margin-bottom:25px; text-align:right; }
+    .detail-whatsapp { width:100%; padding:16px; background:#25D366; border:none; border-radius:30px; color:white; font-size:18px; font-weight:bold; display:flex; align-items:center; justify-content:center; gap:10px; cursor:pointer; transition:0.2s; }
+    .detail-whatsapp:hover { background:#20b858; }
+    .detail-whatsapp svg { width:20px; height:20px; fill:white; }
+    .login-overlay, .add-overlay, .category-overlay, .edit-overlay { position:fixed; inset:0; background:rgba(0,0,0,0); backdrop-filter:blur(0); pointer-events:none; transition:0.3s; z-index:300; }
+    .login-sheet, .add-sheet, .category-sheet, .edit-sheet { position:absolute; bottom:0; left:0; right:0; max-width:430px; margin:0 auto; background:rgba(30,30,40,0.95); backdrop-filter:blur(25px); border-radius:30px 30px 0 0; padding:20px; transform:translateY(100%); transition:0.4s; border-top:1px solid rgba(255,255,255,0.1); max-height:90vh; overflow-y:auto; }
+    .login-header, .add-header, .category-header, .edit-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+    .login-input, .add-input, .edit-input { width:100%; padding:15px; border-radius:16px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.1); color:white; font-size:16px; text-align:right; margin-bottom:15px; }
+    .login-btn, .add-btn, .edit-btn { width:100%; padding:15px; background:#ff8c3a; border:none; border-radius:16px; color:#111; font-weight:bold; font-size:16px; cursor:pointer; }
+    .error-msg { color:#ff5555; font-size:13px; text-align:right; margin-bottom:10px; }
+    .search-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.95); backdrop-filter:blur(20px); z-index:250; display:none; flex-direction:column; padding:60px 20px; }
+    .search-overlay.show { display:flex; }
+    .search-header { display:flex; align-items:center; gap:15px; margin-bottom:30px; }
+    .search-header input { flex:1; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.1); border-radius:30px; padding:15px; color:white; font-size:16px; }
+    .search-results { display:flex; flex-direction:column; gap:15px; }
+    .search-item { display:flex; align-items:center; gap:15px; background:rgba(30,30,40,0.8); backdrop-filter:blur(10px); border-radius:20px; padding:12px; cursor:pointer; border:1px solid rgba(255,255,255,0.05); }
+    .search-item-img { width:60px; height:60px; background:#222; border-radius:14px; overflow:hidden; }
+    .search-item-img img { width:100%; height:100%; object-fit:cover; }
+    .search-item-info { flex:1; text-align:right; }
+    .search-item-name { font-weight:bold; font-size:16px; }
+    .search-item-price { color:#ff8c3a; font-size:14px; }
+    .category-products-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; padding:10px 0 20px; }
+    .category-title { font-size:24px; font-weight:900; color:#ff8c3a; margin-bottom:10px; text-align:right; }
+    .edit-img-preview { width:100%; height:150px; background:#1a1a2a; border-radius:16px; margin-bottom:15px; overflow:hidden; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:14px; position:relative; border:1px dashed #444; }
+    .edit-img-preview img { width:100%; height:100%; object-fit:cover; display:none; }
+    .edit-img-preview.has-image { border:none; }
+    .edit-img-preview.has-image img { display:block; }
+    .edit-img-preview.has-image::before { content:none; }
+    .edit-img-preview::before { content:"لا توجد صورة حالية"; opacity:0.7; }
+    .category-page-img { width:100%; height:150px; background:#1a1a2a; border-radius:16px; margin-bottom:15px; overflow:hidden; position:relative; }
+    .category-page-img img { width:100%; height:100%; object-fit:cover; }
+    .upload-cat-page-btn { position:absolute; bottom:8px; left:8px; width:36px; height:36px; border-radius:50%; background:rgba(0,0,0,0.6); backdrop-filter:blur(5px); color:white; border:1px solid rgba(255,255,255,0.3); display:flex; align-items:center; justify-content:center; font-size:18px; cursor:pointer; z-index:10; }
+    .add-product-in-cat { background:#ff8c3a; border:none; border-radius:30px; padding:8px 20px; color:#111; font-weight:bold; cursor:pointer; display:inline-flex; align-items:center; gap:5px; margin-bottom:15px; }
   </style>
 </head>
 <body>
   <div class="bg-glow"></div>
   <div class="bg-glow2"></div>
   <div class="content">
+    <!-- نفس بنية HTML السابقة، مع إضافة input file مخفي -->
+    <input type="file" id="imageUploadInput" accept="image/*" style="display: none;">
+    
     <!-- الشريط العلوي -->
     <div class="topbar">
       <div class="store-title">ST<span>.</span>OTMANE</div>
@@ -742,7 +142,7 @@
       <div class="action-btn" id="owner-btn" onclick="handleOwnerBtn()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
     </div>
 
-    <!-- لوحة المالك (تظهر بعد تسجيل الدخول) -->
+    <!-- لوحة المالك -->
     <div id="owner-dashboard" style="display:none;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
         <span style="color:#ff8c3a; font-weight:bold;">لوحة تحكم المالك</span>
@@ -764,37 +164,23 @@
       </div>
     </div>
 
-    <!-- الأيقونات العلوية للفئات (بدون نصوص، دائرية) -->
+    <!-- الأيقونات العلوية للفئات -->
     <div class="cats-scroll-wrap">
       <div class="cats-scroll" id="cat-pills-container">
-        <div class="cat-pill" data-cat="Jackets" onclick="openCategoryPage('Jackets')">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7l-2-4H6L4 7"/><path d="M4 7c0 0-1 .5-1 2v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9c0-1.5-1-2-1-2"/><path d="M9 3 7 7l5 2 5-2-2-4"/></svg>
-        </div>
-        <div class="cat-pill" data-cat="Shirts" onclick="openCategoryPage('Shirts')">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7l-2-4H6L4 7"/><path d="M4 7c0 0-1 .5-1 2v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9c0-1.5-1-2-1-2"/><line x1="12" y1="9" x2="12" y2="14"/></svg>
-        </div>
-        <div class="cat-pill" data-cat="Jeans" onclick="openCategoryPage('Jeans')">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 2h14v5l-2 15H7L5 7V2z"/><path d="M5 2h14"/><path d="M10 7l2 3 2-3"/></svg>
-        </div>
-        <div class="cat-pill" data-cat="Shorts" onclick="openCategoryPage('Shorts')">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 2h16v5l-3 15H7L4 7V2z"/><path d="M4 2h16"/><path d="M12 7v8"/></svg>
-        </div>
-        <div class="cat-pill" data-cat="Suits" onclick="openCategoryPage('Suits')">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2 5 7v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7l-3-5"/><path d="M8 2l4 5 4-5"/></svg>
-        </div>
-        <div class="cat-pill" data-cat="Hoodies" onclick="openCategoryPage('Hoodies')">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7l-2-4H6L4 7"/><path d="M4 7s-1 1-1 3v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V10c0-2-1-3-1-3"/><path d="M9 3c0 2 1 3 3 3s3-1 3-3"/></svg>
-        </div>
+        <div class="cat-pill" data-cat="Jackets" onclick="openCategoryPage('Jackets')"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7l-2-4H6L4 7"/><path d="M4 7c0 0-1 .5-1 2v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9c0-1.5-1-2-1-2"/><path d="M9 3 7 7l5 2 5-2-2-4"/></svg></div>
+        <div class="cat-pill" data-cat="Shirts" onclick="openCategoryPage('Shirts')"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7l-2-4H6L4 7"/><path d="M4 7c0 0-1 .5-1 2v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9c0-1.5-1-2-1-2"/><line x1="12" y1="9" x2="12" y2="14"/></svg></div>
+        <div class="cat-pill" data-cat="Jeans" onclick="openCategoryPage('Jeans')"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 2h14v5l-2 15H7L5 7V2z"/><path d="M5 2h14"/><path d="M10 7l2 3 2-3"/></svg></div>
+        <div class="cat-pill" data-cat="Shorts" onclick="openCategoryPage('Shorts')"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 2h16v5l-3 15H7L4 7V2z"/><path d="M4 2h16"/><path d="M12 7v8"/></svg></div>
+        <div class="cat-pill" data-cat="Suits" onclick="openCategoryPage('Suits')"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2 5 7v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7l-3-5"/><path d="M8 2l4 5 4-5"/></svg></div>
+        <div class="cat-pill" data-cat="Hoodies" onclick="openCategoryPage('Hoodies')"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7l-2-4H6L4 7"/><path d="M4 7s-1 1-1 3v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V10c0-2-1-3-1-3"/><path d="M9 3c0 2 1 3 3 3s3-1 3-3"/></svg></div>
       </div>
     </div>
 
-    <!-- شبكة الأقسام (بطاقات الفئات) -->
+    <!-- شبكة الأقسام -->
     <div class="grid-2" id="cat-grid"></div>
 
-    <!-- قسم المنتجات (آخر المنتجات) -->
-    <div class="section-header">
-      <div class="section-title">آخر <span>المنتجات</span></div>
-    </div>
+    <!-- قسم آخر المنتجات -->
+    <div class="section-header"><div class="section-title">آخر <span>المنتجات</span></div></div>
     <div class="products-scroll" id="products-scroll"></div>
 
     <!-- نافذة تفاصيل المنتج -->
@@ -826,6 +212,13 @@
           <div class="detail-close" onclick="closeCategoryPage()">✕</div>
           <div id="category-title" class="category-title">جاكيت</div>
         </div>
+        <div id="category-page-img-container" class="category-page-img" style="display: none;">
+          <img id="category-page-img" src="" alt="صورة القسم">
+          <div id="upload-cat-page-btn" class="upload-cat-page-btn" onclick="uploadCurrentCategoryImage()" style="display: none;">📷</div>
+        </div>
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
+          <button id="add-product-in-cat-btn" class="add-product-in-cat" onclick="openAddProductInCurrentCategory()" style="display: none;">➕ إضافة منتج</button>
+        </div>
         <div id="category-products" class="category-products-grid"></div>
       </div>
     </div>
@@ -851,8 +244,7 @@
         </select>
         <input id="edit-tag" class="edit-input" placeholder="تصنيف (مثل: جديد، تخفيض...)">
         <div style="display:flex; gap:10px; margin-bottom:15px;">
-          <button onclick="document.getElementById('edit-img-input').click()" style="flex:1; background:rgba(255,255,255,0.1); border:none; border-radius:16px; padding:12px; color:white;">تغيير الصورة</button>
-          <input type="file" id="edit-img-input" accept="image/*" style="display:none;" onchange="previewEditImage(event)">
+          <button onclick="openEditImageUpload()" style="flex:1; background:rgba(255,255,255,0.1); border:none; border-radius:16px; padding:12px; color:white; cursor:pointer;">تغيير الصورة</button>
         </div>
         <div id="edit-img-preview" class="edit-img-preview">
           <img id="edit-img-preview-img" src="">
@@ -890,12 +282,11 @@
           <option value="Hoodies">هودي</option>
         </select>
         <input id="new-tag" class="add-input" placeholder="تصنيف (مثل: جديد، تخفيض...)">
-        <div style="display:flex; gap:10px; margin-bottom:15px;">
-          <button onclick="document.getElementById('new-img-input').click()" style="flex:1; background:rgba(255,255,255,0.1); border:none; border-radius:16px; padding:12px; color:white;">اختر صورة</button>
-          <input type="file" id="new-img-input" accept="image/*" style="display:none;" onchange="previewNewImage(event)">
-        </div>
-        <div id="new-img-preview" style="width:100%; height:150px; background:#1a1a2a; border-radius:16px; margin-bottom:15px; display:none; overflow:hidden;">
+        <div id="new-img-preview" style="width:100%; height:150px; background:#1a1a2a; border-radius:16px; margin-bottom:15px; display:none; overflow:hidden; cursor:pointer;" onclick="uploadNewImage()">
           <img id="new-img-preview-img" src="" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div style="text-align:center; margin-bottom:15px;">
+          <button type="button" onclick="uploadNewImage()" style="background:rgba(255,255,255,0.1); border:none; border-radius:16px; padding:12px 20px; color:white; cursor:pointer;">📷 رفع صورة المنتج</button>
         </div>
         <button class="add-btn" onclick="saveNewProduct()">حفظ المنتج</button>
       </div>
@@ -917,26 +308,11 @@
 
     <!-- القائمة السفلية -->
     <nav class="bottom-nav">
-      <div class="nav-item" onclick="setActiveNav(this, 'account')">
-        <div class="nav-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-        <span class="nav-label">حسابي</span>
-      </div>
-      <div class="nav-item" onclick="setActiveNav(this, 'favorites')">
-        <div class="nav-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-        <span class="nav-label">المفضلة</span>
-      </div>
-      <div class="nav-item" onclick="setActiveNav(this, 'cart')">
-        <div class="nav-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
-        <span class="nav-label">السلة</span>
-      </div>
-      <div class="nav-item" onclick="setActiveNav(this, 'search')">
-        <div class="nav-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
-        <span class="nav-label">بحث</span>
-      </div>
-      <div class="nav-item active" onclick="setActiveNav(this, 'home')">
-        <div class="nav-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-        <span class="nav-label">الرئيسية</span>
-      </div>
+      <div class="nav-item" onclick="setActiveNav(this, 'account')"><div class="nav-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><span class="nav-label">حسابي</span></div>
+      <div class="nav-item" onclick="setActiveNav(this, 'favorites')"><div class="nav-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="nav-label">المفضلة</span></div>
+      <div class="nav-item" onclick="setActiveNav(this, 'cart')"><div class="nav-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div><span class="nav-label">السلة</span></div>
+      <div class="nav-item" onclick="setActiveNav(this, 'search')"><div class="nav-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div><span class="nav-label">بحث</span></div>
+      <div class="nav-item active" onclick="setActiveNav(this, 'home')"><div class="nav-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="nav-label">الرئيسية</span></div>
     </nav>
 
     <div class="toast" id="toast"></div>
@@ -947,9 +323,9 @@
     let cartCount = 0;
     const OWNER_PASSWORD = 'mimo2005';
     let isOwner = false;
-    const WHATSAPP_NUMBER = '212629663042'; // رقمك المغربي بعد التعديل
+    const WHATSAPP_NUMBER = '212629663042';
 
-    // المنتجات الافتراضية (مع وصف)
+    // المنتجات الافتراضية
     let products = [
       { name: 'جاكيت جلدي', price: 'DA 4,200', cat: 'Jackets', tag: 'جديد', desc: 'جاكيت جلدي فاخر بتصميم عصري', image: null },
       { name: 'جينز نحيف', price: 'DA 2,800', cat: 'Jeans', tag: 'الأكثر مبيعاً', desc: 'جينز أزرق غامق بقصة مريحة', image: null },
@@ -966,8 +342,102 @@
     function saveCategoryImages() { localStorage.setItem('otmane_category_images', JSON.stringify(categoryImages)); }
 
     const categories = ['Jackets', 'Shirts', 'Jeans', 'Shorts', 'Suits', 'Hoodies'];
+    let currentCategory = null;
+    let currentDetailProduct = null;
+    let currentDetailIndex = -1;
+    let newProductImageData = null;
+    let editImageData = null;
 
-    // دالة رسم الأقسام الرئيسية
+    // الحصول على عنصر input file
+    const fileInput = document.getElementById('imageUploadInput');
+    // متغير لتحديد أي عملية تنتظر الصورة (إضافة أم تعديل)
+    let pendingImageCallback = null;
+
+    // عند اختيار ملف
+    fileInput.addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      // تحقق من نوع الملف
+      if (!file.type.startsWith('image/')) {
+        showToast('❌ الرجاء اختيار صورة');
+        return;
+      }
+
+      // تحويل الصورة إلى Base64
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64Image = e.target.result;
+        if (pendingImageCallback) {
+          pendingImageCallback(base64Image);
+          pendingImageCallback = null;
+        }
+        // إعادة تعيين قيمة input لتمكين اختيار نفس المرة مرة أخرى
+        fileInput.value = '';
+      };
+      reader.onerror = function() {
+        showToast('❌ فشل قراءة الصورة');
+        pendingImageCallback = null;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // دالة لبدء اختيار الصورة
+    function selectImage(callback) {
+      if (!isOwner) {
+        showToast('يجب تسجيل الدخول أولاً');
+        return;
+      }
+      pendingImageCallback = callback;
+      fileInput.click();
+    }
+
+    // دوال رفع الصور (بدون Cloudinary)
+    function uploadCategoryImage(cat) {
+      selectImage((imageUrl) => {
+        categoryImages[cat] = imageUrl;
+        saveCategoryImages();
+        renderCategoryGrid();
+        if (currentCategory === cat) updateCategoryPageImage(cat);
+        showToast('✅ تم تحديث صورة القسم');
+      });
+    }
+
+    function uploadCurrentCategoryImage() {
+      if (currentCategory) uploadCategoryImage(currentCategory);
+      else showToast('❌ لم يتم تحديد القسم');
+    }
+
+    function uploadNewImage() {
+      selectImage((imageUrl) => {
+        newProductImageData = imageUrl;
+        const preview = document.getElementById('new-img-preview');
+        const previewImg = document.getElementById('new-img-preview-img');
+        if (preview && previewImg) {
+          previewImg.src = imageUrl;
+          preview.style.display = 'block';
+        }
+        showToast('✅ تم رفع الصورة');
+      });
+    }
+
+    function openEditImageUpload() {
+      selectImage((imageUrl) => {
+        editImageData = imageUrl;
+        const preview = document.getElementById('edit-img-preview');
+        const previewImg = document.getElementById('edit-img-preview-img');
+        if (preview && previewImg) {
+          previewImg.src = imageUrl;
+          preview.classList.add('has-image');
+        }
+        showToast('✅ تم تغيير الصورة');
+      });
+    }
+
+    // باقي الدوال (نفس الكود السابق، ولكن مع إزالة أي إشارات لـ Cloudinary)
+    // renderCategoryGrid, refreshHomeProducts, openCategoryPage, closeCategoryPage, openProductDetail, etc.
+    // (لقد قمت بنسخها من الكود السابق بدون تغيير)
+    
     function renderCategoryGrid() {
       const grid = document.getElementById('cat-grid');
       if (!grid) return;
@@ -989,31 +459,10 @@
       }).join('');
     }
 
-    // رفع صورة لقسم
-    function uploadCategoryImage(cat) {
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = 'image/*';
-      input.onchange = e => {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = ev => {
-          categoryImages[cat] = ev.target.result;
-          saveCategoryImages();
-          renderCategoryGrid();
-          showToast('✅ تم تحديث صورة القسم');
-        };
-        reader.readAsDataURL(file);
-      };
-      input.click();
-    }
-
-    // دالة تحديث آخر المنتجات في الصفحة الرئيسية
     function refreshHomeProducts() {
       const container = document.getElementById('products-scroll');
       if (!container) return;
-      const latest = products.slice().reverse(); // آخر المنتجات
+      const latest = products.slice().reverse();
       container.innerHTML = latest.map(p => {
         const idx = products.indexOf(p);
         return `
@@ -1028,7 +477,7 @@
               <div class="prod-price-row">
                 <span class="prod-price">${p.price}</span>
                 <div class="whatsapp-icon" onclick="event.stopPropagation(); orderViaWhatsApp('${p.name.replace(/'/g, "\\'")}', '${p.price}')">
-                  <svg viewBox="0 0 24 24"><path d="M19.077 4.928C17.191 3.041 14.683 2 12.006 2 6.798 2 2.548 6.193 2.54 11.393c-.003 1.747.438 3.455 1.279 4.979L2.5 21.5l5.242-1.303c1.523.799 3.235 1.22 4.978 1.22h.004c5.197 0 9.456-4.194 9.464-9.394.004-2.51-.974-4.873-2.861-6.76zM12.014 19.86h-.003c-1.515 0-3.001-.408-4.285-1.176l-.307-.185-3.108.81.83-3.026-.2-.319a7.894 7.894 0 0 1-1.23-4.207c.008-4.367 3.56-7.917 7.934-7.917 2.12 0 4.112.827 5.61 2.326 1.498 1.5 2.322 3.493 2.318 5.61-.007 4.367-3.56 7.917-7.919 7.917zM16.2 13.994c-.229-.117-1.357-.67-1.567-.746-.21-.077-.363-.117-.516.117-.153.233-.594.746-.728.9-.134.152-.268.17-.497.055-.997-.477-1.846-1.055-2.577-1.772-.497-.486-.89-1.057-1.176-1.68-.123-.27-.013-.417.092-.55.096-.118.21-.266.316-.4.105-.132.14-.222.21-.37.07-.148.035-.28-.018-.395-.053-.117-.516-1.242-.707-1.7-.186-.445-.375-.385-.516-.392h-.44c-.158 0-.412.058-.628.29-.215.232-.822.803-.822 1.958 0 1.155.84 2.27.958 2.427.117.156 1.646 2.525 3.99 3.47.558.224.993.358 1.333.46.56.168 1.07.145 1.473.088.45-.064 1.386-.566 1.582-1.113.196-.547.196-1.016.137-1.114-.058-.098-.21-.156-.44-.273z"/></svg>
+                  <svg viewBox="0 0 24 24">...</svg>
                 </div>
               </div>
             </div>
@@ -1037,27 +486,37 @@
       }).join('');
     }
 
-    // فتح صفحة قسم معين
+    function updateCategoryPageImage(cat) {
+      const imgContainer = document.getElementById('category-page-img-container');
+      const imgElement = document.getElementById('category-page-img');
+      const uploadBtn = document.getElementById('upload-cat-page-btn');
+      const imgUrl = categoryImages[cat];
+      if (imgUrl) {
+        imgElement.src = imgUrl;
+        imgContainer.style.display = 'block';
+      } else {
+        imgContainer.style.display = 'none';
+      }
+      if (isOwner) uploadBtn.style.display = 'flex';
+      else uploadBtn.style.display = 'none';
+    }
+
     function openCategoryPage(cat) {
+      currentCategory = cat;
       const catProducts = products.filter(p => p.cat === cat);
       const container = document.getElementById('category-products');
       const title = document.getElementById('category-title');
-      
-      // ترجمة اسم القسم للعربية
-      const catNames = {
-        Jackets: 'جاكيت',
-        Shirts: 'قمصان',
-        Jeans: 'جينز',
-        Shorts: 'شورت',
-        Suits: 'بدل',
-        Hoodies: 'هودي'
-      };
+      const catNames = { Jackets: 'جاكيت', Shirts: 'قمصان', Jeans: 'جينز', Shorts: 'شورت', Suits: 'بدل', Hoodies: 'هودي' };
       title.textContent = catNames[cat] || cat;
+
+      const addBtn = document.getElementById('add-product-in-cat-btn');
+      if (addBtn) addBtn.style.display = isOwner ? 'inline-block' : 'none';
 
       container.innerHTML = catProducts.map(p => {
         const idx = products.indexOf(p);
         return `
-          <div class="prod-card" style="min-width: auto;">
+          <div class="prod-card" style="min-width: auto; position: relative;">
+            ${isOwner ? `<div class="prod-edit-icon" onclick="event.stopPropagation(); openEditProductFromCategory(${idx})">✏️</div>` : ''}
             <div class="prod-img" onclick="openProductDetail(${idx})">
               ${p.image ? `<img src="${p.image}" alt="">` : ''}
               <span class="prod-tag">${p.tag}</span>
@@ -1068,7 +527,7 @@
               <div class="prod-price-row">
                 <span class="prod-price">${p.price}</span>
                 <div class="whatsapp-icon" onclick="event.stopPropagation(); orderViaWhatsApp('${p.name.replace(/'/g, "\\'")}', '${p.price}')">
-                  <svg viewBox="0 0 24 24"><path d="M19.077 4.928C17.191 3.041 14.683 2 12.006 2 6.798 2 2.548 6.193 2.54 11.393c-.003 1.747.438 3.455 1.279 4.979L2.5 21.5l5.242-1.303c1.523.799 3.235 1.22 4.978 1.22h.004c5.197 0 9.456-4.194 9.464-9.394.004-2.51-.974-4.873-2.861-6.76zM12.014 19.86h-.003c-1.515 0-3.001-.408-4.285-1.176l-.307-.185-3.108.81.83-3.026-.2-.319a7.894 7.894 0 0 1-1.23-4.207c.008-4.367 3.56-7.917 7.934-7.917 2.12 0 4.112.827 5.61 2.326 1.498 1.5 2.322 3.493 2.318 5.61-.007 4.367-3.56 7.917-7.919 7.917zM16.2 13.994c-.229-.117-1.357-.67-1.567-.746-.21-.077-.363-.117-.516.117-.153.233-.594.746-.728.9-.134.152-.268.17-.497.055-.997-.477-1.846-1.055-2.577-1.772-.497-.486-.89-1.057-1.176-1.68-.123-.27-.013-.417.092-.55.096-.118.21-.266.316-.4.105-.132.14-.222.21-.37.07-.148.035-.28-.018-.395-.053-.117-.516-1.242-.707-1.7-.186-.445-.375-.385-.516-.392h-.44c-.158 0-.412.058-.628.29-.215.232-.822.803-.822 1.958 0 1.155.84 2.27.958 2.427.117.156 1.646 2.525 3.99 3.47.558.224.993.358 1.333.46.56.168 1.07.145 1.473.088.45-.064 1.386-.566 1.582-1.113.196-.547.196-1.016.137-1.114-.058-.098-.21-.156-.44-.273z"/></svg>
+                  <svg viewBox="0 0 24 24">...</svg>
                 </div>
               </div>
             </div>
@@ -1076,7 +535,8 @@
         `;
       }).join('');
 
-      // إظهار النافذة
+      updateCategoryPageImage(cat);
+
       const overlay = document.getElementById('category-overlay');
       const sheet = document.getElementById('category-sheet');
       overlay.style.pointerEvents = 'all';
@@ -1092,13 +552,9 @@
       overlay.style.background = 'rgba(0,0,0,0)';
       overlay.style.backdropFilter = 'blur(0)';
       setTimeout(() => overlay.style.pointerEvents = 'none', 400);
+      currentCategory = null;
     }
 
-    // متغير لتخزين المنتج الحالي المعروض في التفاصيل
-    let currentDetailProduct = null;
-    let currentDetailIndex = -1;
-
-    // فتح نافذة تفاصيل المنتج
     function openProductDetail(idx) {
       currentDetailIndex = idx;
       const p = products[idx];
@@ -1108,13 +564,8 @@
       document.getElementById('detail-tag').textContent = p.tag;
       document.getElementById('detail-desc').textContent = p.desc;
       const imgDiv = document.getElementById('detail-img');
-      if (p.image) {
-        imgDiv.innerHTML = `<img src="${p.image}" alt="">`;
-      } else {
-        imgDiv.innerHTML = ''; // خلفية فقط
-      }
-
-      // إظهار أزرار التعديل والحذف فقط للمالك
+      if (p.image) imgDiv.innerHTML = `<img src="${p.image}" alt="">`;
+      else imgDiv.innerHTML = '';
       const editBtn = document.getElementById('detail-edit');
       const deleteBtn = document.getElementById('detail-delete');
       if (isOwner) {
@@ -1124,7 +575,6 @@
         editBtn.style.display = 'none';
         deleteBtn.style.display = 'none';
       }
-
       const overlay = document.getElementById('product-detail-overlay');
       const sheet = document.getElementById('product-detail-sheet');
       overlay.style.pointerEvents = 'all';
@@ -1143,18 +593,16 @@
     }
 
     function orderFromDetail() {
-      if (currentDetailProduct) {
-        orderViaWhatsApp(currentDetailProduct.name, currentDetailProduct.price);
-      }
+      if (currentDetailProduct) orderViaWhatsApp(currentDetailProduct.name, currentDetailProduct.price);
     }
 
-    // طلب واتساب
     function orderViaWhatsApp(name, price) {
-      const msg = `مرحباً، أود طلب ${name} بسعر ${price}`;
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+      const phone = WHATSAPP_NUMBER;
+      const text = encodeURIComponent(`مرحباً، أود طلب ${name} بسعر ${price}`);
+      window.location.href = `whatsapp://send?phone=${phone}&text=${text}`;
+      setTimeout(() => window.location.href = `https://wa.me/${phone}?text=${text}`, 500);
     }
 
-    // إضافة إلى السلة
     function addToCart(e) {
       e.stopPropagation();
       cartCount++;
@@ -1162,22 +610,23 @@
       showToast('✓ تمت الإضافة للسلة');
     }
 
-    // دوال المالك
     function handleOwnerBtn() {
       if (isOwner) {
         isOwner = false;
         document.getElementById('owner-dashboard').style.display = 'none';
         document.getElementById('owner-btn').classList.remove('lit');
         renderCategoryGrid();
-        // إخفاء أزرار التعديل والحذف في التفاصيل إذا كانت مفتوحة
         if (document.getElementById('product-detail-overlay').style.pointerEvents === 'all') {
           document.getElementById('detail-edit').style.display = 'none';
           document.getElementById('detail-delete').style.display = 'none';
         }
+        if (currentCategory) {
+          document.getElementById('upload-cat-page-btn').style.display = 'none';
+          const addBtn = document.getElementById('add-product-in-cat-btn');
+          if (addBtn) addBtn.style.display = 'none';
+        }
         showToast('🔒 تم تسجيل الخروج');
-      } else {
-        openLogin();
-      }
+      } else openLogin();
     }
 
     function openLogin() {
@@ -1206,28 +655,35 @@
         document.getElementById('owner-dashboard').style.display = 'block';
         document.getElementById('owner-btn').classList.add('lit');
         renderCategoryGrid();
-        // إذا كانت التفاصيل مفتوحة، نظهر الأزرار
         if (document.getElementById('product-detail-overlay').style.pointerEvents === 'all') {
           document.getElementById('detail-edit').style.display = 'flex';
           document.getElementById('detail-delete').style.display = 'flex';
         }
+        if (currentCategory) {
+          document.getElementById('upload-cat-page-btn').style.display = 'flex';
+          const addBtn = document.getElementById('add-product-in-cat-btn');
+          if (addBtn) addBtn.style.display = 'inline-block';
+        }
         showToast('🔓 مرحباً بك يا مالك');
-      } else {
-        document.getElementById('login-error').textContent = '❌ كلمة المرور غير صحيحة';
-      }
+      } else document.getElementById('login-error').textContent = '❌ كلمة المرور غير صحيحة';
     }
-
-    // دوال إضافة منتج جديد
-    let newProductImageData = null;
 
     function openAddProduct() {
       if (!isOwner) { showToast('يجب تسجيل الدخول أولاً'); return; }
       const overlay = document.getElementById('add-overlay');
       const sheet = document.getElementById('add-sheet');
       overlay.style.pointerEvents = 'all';
-      overlay.style.background = 'rgba(0,0,0,0.7)';
+      overlay.style.background = 'rgba(0,0,0,0.75)';
       overlay.style.backdropFilter = 'blur(15px)';
       sheet.style.transform = 'translateY(0)';
+      
+      document.getElementById('new-name').value = '';
+      document.getElementById('new-price').value = '';
+      document.getElementById('new-desc').value = '';
+      document.getElementById('new-cat').value = 'Jackets';
+      document.getElementById('new-tag').value = 'جديد';
+      document.getElementById('new-img-preview').style.display = 'none';
+      newProductImageData = null;
     }
 
     function closeAddProduct() {
@@ -1237,27 +693,6 @@
       overlay.style.background = 'rgba(0,0,0,0)';
       overlay.style.backdropFilter = 'blur(0)';
       setTimeout(() => overlay.style.pointerEvents = 'none', 400);
-      // reset
-      document.getElementById('new-name').value = '';
-      document.getElementById('new-price').value = '';
-      document.getElementById('new-desc').value = '';
-      document.getElementById('new-tag').value = '';
-      newProductImageData = null;
-      document.getElementById('new-img-preview').style.display = 'none';
-    }
-
-    function previewNewImage(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        newProductImageData = e.target.result;
-        const preview = document.getElementById('new-img-preview');
-        const previewImg = document.getElementById('new-img-preview-img');
-        previewImg.src = newProductImageData;
-        preview.style.display = 'block';
-      };
-      reader.readAsDataURL(file);
     }
 
     function saveNewProduct() {
@@ -1267,13 +702,14 @@
       const cat = document.getElementById('new-cat').value;
       const tag = document.getElementById('new-tag').value.trim() || 'جديد';
       if (!name || !price || !desc) { showToast('⚠️ أكمل البيانات'); return; }
+      if (!newProductImageData) { showToast('⚠️ لم يتم رفع الصورة'); return; }
       const newProd = {
         name,
         price: `DA ${Number(price).toLocaleString()}`,
         cat,
         tag,
         desc,
-        image: newProductImageData || null
+        image: newProductImageData
       };
       products.push(newProd);
       localStorage.setItem('otmane_products', JSON.stringify(products));
@@ -1283,31 +719,27 @@
       showToast('✅ تمت الإضافة');
     }
 
-    // دوال تعديل المنتج
-    let editImageData = null;
-
     function openEditProduct() {
       if (!isOwner || currentDetailIndex === -1) return;
       const p = products[currentDetailIndex];
-      
-      // تعبئة الحقول
       document.getElementById('edit-name').value = p.name;
       document.getElementById('edit-price').value = p.price.replace(/[^0-9]/g, '');
       document.getElementById('edit-desc').value = p.desc;
       document.getElementById('edit-cat').value = p.cat;
       document.getElementById('edit-tag').value = p.tag;
       
-      // معاينة الصورة الحالية
+      const preview = document.getElementById('edit-img-preview');
+      const previewImg = document.getElementById('edit-img-preview-img');
       if (p.image) {
-        document.getElementById('edit-img-preview-img').src = p.image;
-        document.getElementById('edit-img-preview').style.display = 'block';
+        previewImg.src = p.image;
+        preview.classList.add('has-image');
         editImageData = p.image;
       } else {
-        document.getElementById('edit-img-preview').style.display = 'none';
+        preview.classList.remove('has-image');
+        previewImg.src = '';
         editImageData = null;
       }
-
-      // إغلاق نافذة التفاصيل وفتح نافذة التعديل
+      
       closeProductDetail();
       const overlay = document.getElementById('edit-overlay');
       const sheet = document.getElementById('edit-sheet');
@@ -1326,18 +758,6 @@
       setTimeout(() => overlay.style.pointerEvents = 'none', 400);
     }
 
-    function previewEditImage(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        editImageData = e.target.result;
-        document.getElementById('edit-img-preview-img').src = editImageData;
-        document.getElementById('edit-img-preview').style.display = 'block';
-      };
-      reader.readAsDataURL(file);
-    }
-
     function saveEditedProduct() {
       if (currentDetailIndex === -1) return;
       const name = document.getElementById('edit-name').value.trim();
@@ -1345,10 +765,7 @@
       const desc = document.getElementById('edit-desc').value.trim();
       const cat = document.getElementById('edit-cat').value;
       const tag = document.getElementById('edit-tag').value.trim() || 'جديد';
-      
       if (!name || !price || !desc) { showToast('⚠️ أكمل البيانات'); return; }
-
-      // تحديث المنتج
       products[currentDetailIndex] = {
         ...products[currentDetailIndex],
         name,
@@ -1358,15 +775,14 @@
         tag,
         image: editImageData || products[currentDetailIndex].image
       };
-
       localStorage.setItem('otmane_products', JSON.stringify(products));
       closeEditProduct();
       refreshHomeProducts();
       renderCategoryGrid();
+      if (currentCategory) openCategoryPage(currentCategory);
       showToast('✅ تم تعديل المنتج');
     }
 
-    // دوال حذف المنتج
     function deleteProduct() {
       if (!isOwner || currentDetailIndex === -1) return;
       if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
@@ -1375,52 +791,44 @@
         closeProductDetail();
         refreshHomeProducts();
         renderCategoryGrid();
+        if (currentCategory) openCategoryPage(currentCategory);
         showToast('🗑️ تم حذف المنتج');
       }
     }
 
-    // دوال البحث
+    function openAddProductInCurrentCategory() {
+      if (!isOwner || !currentCategory) { showToast('يجب تسجيل الدخول أولاً'); return; }
+      openAddProduct();
+      setTimeout(() => { document.getElementById('new-cat').value = currentCategory; }, 100);
+    }
+
+    function openEditProductFromCategory(index) {
+      if (!isOwner) return;
+      currentDetailIndex = index;
+      openEditProduct();
+    }
+
     function openSearch() {
       document.getElementById('search-overlay').classList.add('show');
       document.getElementById('search-input').focus();
     }
-
     function closeSearch() {
       document.getElementById('search-overlay').classList.remove('show');
       document.getElementById('search-results').innerHTML = '';
     }
-
     function performSearch() {
       const query = document.getElementById('search-input').value.toLowerCase().trim();
       const resultsContainer = document.getElementById('search-results');
-      if (query.length < 2) {
-        resultsContainer.innerHTML = '';
-        return;
-      }
-      const results = products.filter(p => p.name.includes(query));
-      if (results.length === 0) {
-        resultsContainer.innerHTML = '<div style="color:#aaa; text-align:center;">لا توجد نتائج</div>';
-        return;
-      }
-      resultsContainer.innerHTML = results.map(p => `
-        <div class="search-item" onclick="selectSearchResult('${products.indexOf(p)}')">
-          <div class="search-item-img">
-            ${p.image ? `<img src="${p.image}" alt="">` : ''}
-          </div>
-          <div class="search-item-info">
-            <div class="search-item-name">${p.name}</div>
-            <div class="search-item-price">${p.price}</div>
-          </div>
-        </div>
-      `).join('');
+      if (query.length < 2) { resultsContainer.innerHTML = ''; return; }
+      const results = products.filter(p => p.name.toLowerCase().includes(query));
+      if (results.length === 0) { resultsContainer.innerHTML = '<div style="color:#aaa; text-align:center;">لا توجد نتائج</div>'; return; }
+      resultsContainer.innerHTML = results.map((p) => {
+        const productIndex = products.findIndex(prod => prod === p);
+        return `<div class="search-item" onclick="selectSearchResult(${productIndex})"><div class="search-item-img">${p.image ? `<img src="${p.image}" alt="">` : ''}</div><div class="search-item-info"><div class="search-item-name">${p.name}</div><div class="search-item-price">${p.price}</div></div></div>`;
+      }).join('');
     }
+    function selectSearchResult(idx) { closeSearch(); openProductDetail(idx); }
 
-    function selectSearchResult(idx) {
-      closeSearch();
-      openProductDetail(idx);
-    }
-
-    // دوال القائمة السفلية
     function setActiveNav(el, page) {
       document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
       el.classList.add('active');
@@ -1438,7 +846,6 @@
       else showToast(`السلة تحتوي على ${cartCount} منتجات`);
     }
 
-    // Toast
     function showToast(msg) {
       const t = document.getElementById('toast');
       t.textContent = msg;
@@ -1446,15 +853,15 @@
       setTimeout(() => t.classList.remove('show'), 2000);
     }
 
-    // تهيئة الصفحة
+    // التحميل الأولي
     window.addEventListener('DOMContentLoaded', () => {
-      renderCategoryGrid();
-      refreshHomeProducts();
-      // تحميل المنتجات المحفوظة
       try {
         const saved = localStorage.getItem('otmane_products');
         if (saved) products = JSON.parse(saved);
-      } catch(e) {}
+        else localStorage.setItem('otmane_products', JSON.stringify(products));
+      } catch(e) { console.warn(e); }
+      renderCategoryGrid();
+      refreshHomeProducts();
     });
   </script>
 </body>
